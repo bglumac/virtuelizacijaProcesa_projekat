@@ -62,6 +62,26 @@ namespace Common
         [DataMember]
         public float vel_z { get; set; }
 
+        [DataMember]
+        public float lin_x { get; set; }
+
+        [DataMember]
+        public float lin_y { get; set; }
+
+        [DataMember]
+        public float lin_z { get; set; }
+
+        [DataMember]
+        public float ang_x { get; set; }
+
+        [DataMember]
+        public float ang_y { get; set; }
+
+        [DataMember]
+        public float ang_z { get; set; }
+
+
+
         public DroneSample() { }
 
         public DroneSample(
@@ -81,7 +101,13 @@ namespace Common
             string ori_w,
             string vel_x,
             string vel_y,
-            string vel_z
+            string vel_z,
+            string lin_x,
+            string lin_y,
+            string lin_z,
+            string ang_x,
+            string ang_y,
+            string ang_z
             )
         {
             this.time = float.Parse(time, CultureInfo.InvariantCulture);
@@ -99,6 +125,12 @@ namespace Common
             this.vel_x = float.Parse(vel_x, CultureInfo.InvariantCulture);
             this.vel_y = float.Parse(vel_y, CultureInfo.InvariantCulture);
             this.vel_z = float.Parse(vel_z, CultureInfo.InvariantCulture);
+            this.lin_x = float.Parse(vel_x, CultureInfo.InvariantCulture);
+            this.lin_y = float.Parse(vel_y, CultureInfo.InvariantCulture);
+            this.lin_z = float.Parse(vel_z, CultureInfo.InvariantCulture);
+            this.ang_x = float.Parse(vel_x, CultureInfo.InvariantCulture);
+            this.ang_y = float.Parse(vel_y, CultureInfo.InvariantCulture);
+            this.ang_z = float.Parse(vel_z, CultureInfo.InvariantCulture);
         }
 
         public ActionResult Validate()

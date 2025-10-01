@@ -36,7 +36,7 @@ namespace Service
         public ActionResult StartSession(int drone_id) { 
             Random rnd = new Random();
             string directory = "Data/" + drone_id  + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "/";
-            path = directory + "session.csv";
+            path = directory + "measurements_session.csv";
 
             try
             {
