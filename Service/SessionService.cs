@@ -17,6 +17,7 @@ namespace Service
         public static event EventHandler<DroneSampleEventArgs> CurrentSpikeEvent;
 
         public static event EventHandler<DroneSampleEventArgs> AccelartionSpike;
+        public static event EventHandler<DroneSampleEventArgs> WindSpike;
 
         public static event EventHandler<DroneSampleEventArgs> OnTransferStarted;
         public static event EventHandler<DroneSampleEventArgs> OnTransferCompleted;
@@ -36,6 +37,9 @@ namespace Service
         const float A_threshold = 0.25f;
         const float W_threshold = 0.25f;
         private static float prevAnorm = 0f;
+        private static float sumAnorm = 0f;
+        private static float sampleCnt = 0f;
+
 
 
         public ActionResult StartSession(int drone_id) { 
@@ -113,7 +117,8 @@ namespace Service
 
                     if (prev_sample != null)
                     {
-                        // Proveri stvari spikes errori sta god vetar
+                        AccelerationCheck(sample);
+                        WindCheck(sample);
                     }
 
                     prev_sample = sample;
@@ -187,10 +192,30 @@ namespace Service
                 string direction = deltaA > 0 ? "above expected" : "below expected";
                 AccelartionSpike(this, new DroneSampleEventArgs(sample.drone_id, sample.row, $"Acceleration spike {direction}"));
             }
+
+            sumAnorm += Anorm;
+            sampleCnt++;
+            float Amean = sumAnorm / sampleCnt;
+
+            if(Anorm < 0.75f * Amean || Anorm > 1.25f * Amean)
+            {
+                string direction = Anorm < 0.75f * Amean ? "below expected" : "above expected";
+                OnWarningRaised(this, new DroneSampleEventArgs(sample.drone_id, sample.row, $"OutOfBoundWarning {direction}"));
+            }
+
+            prevAnorm = Anorm; 
         }
 
         public void WindCheck(DroneSample sample)
         {
+            float Weffect = Math.Abs(sample.wind_speed * (float)Math.Sin(sample.wind_angle));
+
+            if(Math.Abs(Weffect) > W_threshold)
+            {
+                string direction = Weffect > 0 ? "above expected" : "below expected";
+
+                WindSpike(this, new DroneSampleEventArgs(sample.drone_id, sample.row, $"WindSpike: {direction}: {Weffect}"));
+            }
 
         }
     }
