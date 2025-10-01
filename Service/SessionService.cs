@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Common;
 
@@ -14,6 +15,8 @@ namespace Service
         // Events
         public static event EventHandler<DroneSampleEventArgs> VoltageSpikeEvent;
         public static event EventHandler<DroneSampleEventArgs> CurrentSpikeEvent;
+
+        public static event EventHandler<DroneSampleEventArgs> AccelartionSpike;
 
         public static event EventHandler<DroneSampleEventArgs> OnTransferStarted;
         public static event EventHandler<DroneSampleEventArgs> OnTransferCompleted;
@@ -30,8 +33,10 @@ namespace Service
         private static DroneSample prev_sample = null;
 
         // Constants
-        const float VoltageSpikeTresh = 0.1f;
-        const float CurrentSpikeTresh = 0.1f;
+        const float A_threshold = 0.25f;
+        const float W_threshold = 0.25f;
+        private static float prevAnorm = 0f;
+
 
         public ActionResult StartSession(int drone_id) { 
             Random rnd = new Random();
@@ -169,6 +174,24 @@ namespace Service
             {
                 OnTransferCompleted(this, new DroneSampleEventArgs(drone_id, 0, "Porcess finished!"));
             }
+        }
+
+        public void AccelerationCheck(DroneSample sample)
+        {
+            float Anorm = (float)Math.Sqrt(Math.Pow(sample.lin_x, 2) + Math.Pow(sample.lin_y, 2) + Math.Pow(sample.lin_z, 2));
+
+            float deltaA = Anorm -  prevAnorm;
+        
+            if(prev_sample != null && Math.Abs(deltaA) > A_threshold)
+            {
+                string direction = deltaA > 0 ? "above expected" : "below expected";
+                AccelartionSpike(this, new DroneSampleEventArgs(sample.drone_id, sample.row, $"Acceleration spike {direction}"));
+            }
+        }
+
+        public void WindCheck(DroneSample sample)
+        {
+
         }
     }
 }
