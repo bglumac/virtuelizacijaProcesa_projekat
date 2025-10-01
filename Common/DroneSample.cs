@@ -110,6 +110,8 @@ namespace Common
             string ang_z
             )
         {
+            this.drone_id = drone_id;
+            this.row = row;
             this.time = float.Parse(time, CultureInfo.InvariantCulture);
             this.wind_speed = float.Parse(wind_speed, CultureInfo.InvariantCulture);
             this.wind_angle = float.Parse(wind_angle, CultureInfo.InvariantCulture);
