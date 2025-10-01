@@ -29,6 +29,7 @@ namespace Client
 
             // Izbor fajla?
             string file = SelectFlight();
+            //drone_id = int.Parse(file);
             path = Path.Combine(folder, file + ".csv");
             //int drone_id = 26; // Ovo valjda generisemo random ;p. Ili samo uzmi broj fajla?
             // 
@@ -37,11 +38,12 @@ namespace Client
 
             try
             {
+                Console.WriteLine("id dron " + drone_id);
                 ActionResult res = service.StartSession(drone_id);
-                Console.WriteLine($"Server -> ${res.message}");
+                Console.WriteLine($"Server -> {res.message}");
 
                 // Salji samplove
-                SendDroneSamples(drone_id);
+                SendDroneSamples(drone_id, path);
                 // Zatvori
                 service.EndSession();
             }
@@ -62,6 +64,7 @@ namespace Client
             Console.WriteLine($"Number of flights found {files.Length}");
 
             string selected = null;
+            int id = 0;
 
             while(selected == null)
             {
@@ -80,33 +83,42 @@ namespace Client
                 {
                     Console.Write($"ERROR: No file found for number {fNum}. Try again.");
                 }
+                else
+                {
+                    id = fNum;
+                }
             }
 
             Console.WriteLine($"Selected file: {Path.GetFileName(selected)}");
-            drone_id = int.Parse(selected);
+            drone_id = id;
+
             return selected;
         }
 
-        private static void SendDroneSamples(int id)
+        private static void SendDroneSamples(int id, string filePath)
         {
             try
             {
-                using(var reader = new StreamReader(path))
+                using(var reader = new StreamReader(filePath))
                 {
                     string header = reader.ReadLine();
                     string line;
-                    int row = 0;
+                    int row = 1;
 
                     while((line = reader.ReadLine()) != null)
                     {
+                       
                         var parts = line.Split(',');
 
-                        var sample = new DroneSample(drone_id, row, parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7],
+                        var sample = new DroneSample(id, row, parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7],
                                         parts[8], parts[9], parts[10], parts[11], parts[12], parts[13], parts[14], parts[15], parts[16],
                                         parts[17], parts[18], parts[19], parts[20]);
 
+
+                        Console.WriteLine($"Drone Sample: {id} | {row} | {sample.battery_c}");
                         var rez = service.PushSample(sample);
                         Console.WriteLine($"Server: {rez.message}");
+                        row++;
                     }
 
                 }

@@ -10,7 +10,7 @@ namespace Common
     {
        public void OnSampleEvent(object sender, DroneSampleEventArgs e)
         {
-            Console.WriteLine($"Event -> {e.drone_id} | {e.row} | {e.message}");
+            Console.WriteLine($"SampleEvent -> {e.drone_id} | {e.row} | {e.message}");
             // Logger?
         }
     }

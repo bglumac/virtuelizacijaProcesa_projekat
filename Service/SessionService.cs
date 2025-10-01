@@ -130,7 +130,7 @@ namespace Service
                         OnSampleReceived(this, new DroneSampleEventArgs(sample.drone_id, sample.row, "Good sample!"));
                     }
 
-                    return new ActionResult(Result.SUCCESS);
+                    return new ActionResult(Result.SUCCESS, res.message);
                 }
 
                 else
@@ -210,7 +210,7 @@ namespace Service
         {
             float Weffect = Math.Abs(sample.wind_speed * (float)Math.Sin(sample.wind_angle));
 
-            Console.WriteLine(Weffect);
+            Console.WriteLine("Weffext: " + Weffect);
 
             if(Math.Abs(Weffect) > W_threshold && WindSpike != null)
             {
