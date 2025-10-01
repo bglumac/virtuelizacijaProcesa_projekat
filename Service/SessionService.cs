@@ -187,7 +187,7 @@ namespace Service
 
             float deltaA = Anorm -  prevAnorm;
         
-            if(prev_sample != null && Math.Abs(deltaA) > A_threshold)
+            if(prev_sample != null && Math.Abs(deltaA) > A_threshold && AccelartionSpike != null)
             {
                 string direction = deltaA > 0 ? "above expected" : "below expected";
                 AccelartionSpike(this, new DroneSampleEventArgs(sample.drone_id, sample.row, $"Acceleration spike {direction}"));
@@ -210,9 +210,13 @@ namespace Service
         {
             float Weffect = Math.Abs(sample.wind_speed * (float)Math.Sin(sample.wind_angle));
 
-            if(Math.Abs(Weffect) > W_threshold)
+            Console.WriteLine(Weffect);
+
+            if(Math.Abs(Weffect) > W_threshold && WindSpike != null)
             {
                 string direction = Weffect > 0 ? "above expected" : "below expected";
+
+                
 
                 WindSpike(this, new DroneSampleEventArgs(sample.drone_id, sample.row, $"WindSpike: {direction}: {Weffect}"));
             }
