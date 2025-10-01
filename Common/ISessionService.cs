@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace Common
 {
     [ServiceContract]
-    internal interface ISessionService
+    public interface ISessionService
     {
         [OperationContract]
-        void StartSession();
+        ActionResult StartSession(int drone_id);
         [OperationContract]
-        void PushSample();
+        ActionResult PushSample(DroneSample sample);
         [OperationContract]
         void EndSession();
     }

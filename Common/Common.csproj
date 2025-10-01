@@ -43,7 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionResult.cs" />
     <Compile Include="DroneSample.cs" />
+    <Compile Include="DroneSampleEventArgs.cs" />
+    <Compile Include="DroneSampleListener.cs" />
+    <Compile Include="DroneServiceException.cs" />
     <Compile Include="ISessionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

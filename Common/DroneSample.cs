@@ -12,6 +12,12 @@ namespace Common
     public class DroneSample
     {
         [DataMember]
+        public int drone_id {  get; set; }
+
+        [DataMember]
+        public int row {  get; set; }
+
+        [DataMember]
         public float time { get; set; }
 
         [DataMember]
@@ -59,6 +65,8 @@ namespace Common
         public DroneSample() { }
 
         public DroneSample(
+            int drone_id,
+            int row,
             string time,
             string wind_speed,
             string wind_angle,
@@ -91,6 +99,12 @@ namespace Common
             this.vel_x = float.Parse(vel_x, CultureInfo.InvariantCulture);
             this.vel_y = float.Parse(vel_y, CultureInfo.InvariantCulture);
             this.vel_z = float.Parse(vel_z, CultureInfo.InvariantCulture);
+        }
+
+        public ActionResult Validate()
+        {
+            // FALI KOD
+            return new ActionResult(Result.SUCCESS);
         }
     }
 }
