@@ -23,8 +23,8 @@ namespace Service
             SessionService.OnSampleReceived += listener.OnSampleEvent;
 
             // Spike
-            SessionService.VoltageSpikeEvent += listener.OnSampleEvent;
-            SessionService.CurrentSpikeEvent += listener.OnSampleEvent;
+            SessionService.AccelartionSpike += listener.OnSampleEvent;
+            SessionService.WindSpike += listener.OnSampleEvent;
 
             // Warning
             SessionService.OnWarningRaised += listener.OnSampleEvent;

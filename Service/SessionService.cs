@@ -13,9 +13,9 @@ namespace Service
 {
     public class SessionService : ISessionService
     {   
-        // Events
-        public static event EventHandler<DroneSampleEventArgs> VoltageSpikeEvent;
-        public static event EventHandler<DroneSampleEventArgs> CurrentSpikeEvent;
+        //// Events
+        //public static event EventHandler<DroneSampleEventArgs> VoltageSpikeEvent;
+        //public static event EventHandler<DroneSampleEventArgs> CurrentSpikeEvent;
 
         public static event EventHandler<DroneSampleEventArgs> AccelartionSpike;
         public static event EventHandler<DroneSampleEventArgs> WindSpike;
