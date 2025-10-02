@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Common
 {
@@ -110,35 +111,46 @@ namespace Common
             string ang_z
             )
         {
-            this.drone_id = drone_id;
-            this.row = row;
-            this.time = float.Parse(time, CultureInfo.InvariantCulture);
-            this.wind_speed = float.Parse(wind_speed, CultureInfo.InvariantCulture);
-            this.wind_angle = float.Parse(wind_angle, CultureInfo.InvariantCulture);
-            this.battery_v = float.Parse(battery_v, CultureInfo.InvariantCulture);
-            this.battery_c = float.Parse(battery_c, CultureInfo.InvariantCulture);
-            this.pos_x = float.Parse(pos_x, CultureInfo.InvariantCulture);
-            this.pos_y = float.Parse(pos_y, CultureInfo.InvariantCulture);
-            this.pos_z = float.Parse(pos_z, CultureInfo.InvariantCulture);
-            this.ori_x = float.Parse(ori_x, CultureInfo.InvariantCulture);
-            this.ori_y = float.Parse(ori_y, CultureInfo.InvariantCulture);
-            this.ori_z = float.Parse(ori_z, CultureInfo.InvariantCulture);
-            this.ori_w = float.Parse(ori_w, CultureInfo.InvariantCulture);
-            this.vel_x = float.Parse(vel_x, CultureInfo.InvariantCulture);
-            this.vel_y = float.Parse(vel_y, CultureInfo.InvariantCulture);
-            this.vel_z = float.Parse(vel_z, CultureInfo.InvariantCulture);
-            this.lin_x = float.Parse(vel_x, CultureInfo.InvariantCulture);
-            this.lin_y = float.Parse(vel_y, CultureInfo.InvariantCulture);
-            this.lin_z = float.Parse(vel_z, CultureInfo.InvariantCulture);
-            this.ang_x = float.Parse(vel_x, CultureInfo.InvariantCulture);
-            this.ang_y = float.Parse(vel_y, CultureInfo.InvariantCulture);
-            this.ang_z = float.Parse(vel_z, CultureInfo.InvariantCulture);
+            try
+            {
+                this.drone_id = drone_id;
+                this.row = row;
+                this.time = float.Parse(time, CultureInfo.InvariantCulture);
+                this.wind_speed = float.Parse(wind_speed, CultureInfo.InvariantCulture);
+                this.wind_angle = float.Parse(wind_angle, CultureInfo.InvariantCulture);
+                this.battery_v = float.Parse(battery_v, CultureInfo.InvariantCulture);
+                this.battery_c = float.Parse(battery_c, CultureInfo.InvariantCulture);
+                this.pos_x = float.Parse(pos_x, CultureInfo.InvariantCulture);
+                this.pos_y = float.Parse(pos_y, CultureInfo.InvariantCulture);
+                this.pos_z = float.Parse(pos_z, CultureInfo.InvariantCulture);
+                this.ori_x = float.Parse(ori_x, CultureInfo.InvariantCulture);
+                this.ori_y = float.Parse(ori_y, CultureInfo.InvariantCulture);
+                this.ori_z = float.Parse(ori_z, CultureInfo.InvariantCulture);
+                this.ori_w = float.Parse(ori_w, CultureInfo.InvariantCulture);
+                this.vel_x = float.Parse(vel_x, CultureInfo.InvariantCulture);
+                this.vel_y = float.Parse(vel_y, CultureInfo.InvariantCulture);
+                this.vel_z = float.Parse(vel_z, CultureInfo.InvariantCulture);
+                this.lin_x = float.Parse(vel_x, CultureInfo.InvariantCulture);
+                this.lin_y = float.Parse(vel_y, CultureInfo.InvariantCulture);
+                this.lin_z = float.Parse(vel_z, CultureInfo.InvariantCulture);
+                this.ang_x = float.Parse(vel_x, CultureInfo.InvariantCulture);
+                this.ang_y = float.Parse(vel_y, CultureInfo.InvariantCulture);
+                this.ang_z = float.Parse(vel_z, CultureInfo.InvariantCulture);
+            }
+            catch (Exception ex)
+            {
+                drone_id = -1;
+                Console.WriteLine("Invalid sample");
+            }
         }
 
         public ActionResult Validate()
         {
-            // FALI KOD
-            return new ActionResult(Result.SUCCESS);
+            if (drone_id == -1)
+                return new ActionResult(Result.FAILED, "Invalid drone sample");
+
+
+            return new ActionResult(Result.SUCCESS, "Sample OK");
         }
 
         public override string ToString()
