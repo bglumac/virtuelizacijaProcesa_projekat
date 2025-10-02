@@ -211,7 +211,7 @@ namespace Service
         {
             float Weffect = Math.Abs(sample.wind_speed * (float)Math.Sin(sample.wind_angle));
 
-            Console.WriteLine("Weffext: " + Weffect);
+           // Console.WriteLine("Weffext: " + Weffect);
 
             if(Math.Abs(Weffect) > W_threshold && WindSpike != null)
             {

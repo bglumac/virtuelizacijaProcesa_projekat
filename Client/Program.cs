@@ -38,7 +38,7 @@ namespace Client
 
             try
             {
-                Console.WriteLine("id dron " + drone_id);
+                //Console.WriteLine("id dron " + drone_id);
                 ActionResult res = service.StartSession(drone_id);
                 Console.WriteLine($"Server -> {res.message}");
 
