@@ -146,8 +146,24 @@ namespace Common
 
         public ActionResult Validate()
         {
-            if (drone_id == -1)
+            if (drone_id <= 0)
                 return new ActionResult(Result.FAILED, "Invalid drone sample");
+
+            if(row < 0)
+                return new ActionResult(Result.FAILED, "Invalid row");
+
+            if (time < 0)
+                return new ActionResult(Result.FAILED, "Invalid time");
+
+            if (wind_speed < 0)
+                return new ActionResult(Result.FAILED, "Invalid wind speed");
+
+            if(battery_v <= 0)
+                return new ActionResult(Result.FAILED, "Invalid battery voltage");
+
+            if(battery_c < 0)
+                return new ActionResult(Result.FAILED, "Invalid battery current");
+
 
 
             return new ActionResult(Result.SUCCESS, "Sample OK");
