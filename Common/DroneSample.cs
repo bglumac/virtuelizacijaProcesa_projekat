@@ -140,5 +140,10 @@ namespace Common
             // FALI KOD
             return new ActionResult(Result.SUCCESS);
         }
+
+        public override string ToString()
+        {
+            return $"TIME: {time} ID: {drone_id} ROW: {row} WIND_S: {wind_speed} WIND_A: {wind_angle} LIN: {lin_x},{lin_y},{lin_z}";
+        }
     }
 }
