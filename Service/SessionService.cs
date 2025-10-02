@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
@@ -34,8 +35,8 @@ namespace Service
         private static DroneSample prev_sample = null;
 
         // Constants
-        const float A_threshold = 0.25f;
-        const float W_threshold = 0.25f;
+        private static float A_threshold = float.Parse(ConfigurationManager.AppSettings["A_threshold"]);
+        private static float W_threshold = float.Parse(ConfigurationManager.AppSettings["W_threshold"]);
         private static float prevAnorm = 0f;
         private static float sumAnorm = 0f;
         private static float sampleCnt = 0f;
